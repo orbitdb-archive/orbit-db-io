@@ -28,8 +28,9 @@ const stringifyCid = (cid) => {
   return cid.toBaseEncodedString()
 }
 
-const writePb = async (ipfs, obj) => {
-  const buffer = Buffer.from(JSON.stringify(obj))
+const writePb = async (ipfs, obj, options = {}) => {
+  const str = options.legacy ? JSON.stringify(obj, null, 2) : JSON.stringify(obj)
+  const buffer = Buffer.from(str)
   const dagNode = await createPbDagNode(buffer)
 
   const cid = await ipfs.dag.put(dagNode, {
