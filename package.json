@@ -10,7 +10,10 @@
     "type": "git",
     "url": "git+https://github.com/orbitdb/orbit-db-io.git"
   },
-  "keywords": ["orbitdb", "orbit-db"],
+  "keywords": [
+    "orbitdb",
+    "orbit-db"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {

@@ -71,9 +71,21 @@ const readCbor = async (ipfs, cid, options) => {
   return obj
 }
 
+const writeObj = async (ipfs, obj, options) => {
+  const onlyHash = options.onlyHash || false
+  const opts = Object.assign({}, { onlyHash: onlyHash }, options.format ? { format: options.format, hashAlg: 'sha2-256' } : {})
+  if (opts.format === 'dag-pb') {
+    obj = await createPbDagNode(obj)
+  }
+
+  const cid = await ipfs.dag.put(obj, opts)
+  return cid.toBaseEncodedString()
+}
+
 const formats = {
   'dag-pb': { read: readPb, write: writePb },
-  'dag-cbor': { write: writeCbor, read: readCbor }
+  'dag-cbor': { write: writeCbor, read: readCbor },
+  'raw': { write: writeObj }
 }
 
 const write = (ipfs, codec, obj, options = {}) => {
