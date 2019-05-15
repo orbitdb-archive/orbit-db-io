@@ -1,6 +1,6 @@
 {
   "name": "orbit-db-io",
-  "version": "0.0.1",
+  "version": "0.0.2-rc.1",
   "description": "IO helper module for orbit-db",
   "main": "index.js",
   "scripts": {
