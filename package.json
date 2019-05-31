@@ -1,6 +1,6 @@
 {
   "name": "orbit-db-io",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "IO helper module for orbit-db",
   "main": "index.js",
   "scripts": {
@@ -21,8 +21,7 @@
   },
   "homepage": "https://github.com/orbitdb/orbit-db-io#readme",
   "dependencies": {
-    "cids": "^0.5.7",
-    "ipld-dag-pb": "^0.15.2",
-    "pify": "^4.0.1"
+    "cids": "^0.7.1",
+    "ipld-dag-pb": "^0.17.4"
   }
 }
