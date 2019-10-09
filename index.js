@@ -31,13 +31,18 @@ const stringifyCid = (cid, options) => {
   return cid.toBaseEncodedString(base)
 }
 
-const writePb = async (ipfs, obj) => {
+const writePb = async (ipfs, obj, options) => {
   const buffer = Buffer.from(JSON.stringify(obj))
   const dagNode = dagPB.DAGNode.create(buffer)
   const cid = await ipfs.dag.put(dagNode, {
     format: 'dag-pb',
     hashAlg: 'sha2-256'
   })
+
+  const pin = options.pin || true
+  if (pin) {
+    await ipfs.pin.add(cid)
+  }
 
   return cid.toV0().toBaseEncodedString()
 }
@@ -61,6 +66,10 @@ const writeCbor = async (ipfs, obj, options) => {
   const base = options.base || defaultBase
   const onlyHash = options.onlyHash || false
   const cid = await ipfs.dag.put(dagNode, { onlyHash })
+  const pin = options.pin || true
+  if (pin) {
+    await ipfs.pin.add(cid)
+  }
   return cid.toBaseEncodedString(base)
 }
 
