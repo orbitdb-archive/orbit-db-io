@@ -14,7 +14,7 @@
     "orbitdb",
     "orbit-db"
   ],
-  "author": "",
+  "author": "shamb0t",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/orbitdb/orbit-db-io/issues"
@@ -23,5 +23,9 @@
   "dependencies": {
     "cids": "^0.7.1",
     "ipld-dag-pb": "^0.17.4"
-  }
+  },
+  "localMaintainers": [
+    "shamb0t <shams@haja.io>",
+    "hajamark <mark@haja.io>"
+  ]
 }

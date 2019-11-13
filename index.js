@@ -22,7 +22,7 @@ const stringifyCid = (cid, options) => {
   if (Array.isArray(cid)) {
     return cid.map(stringifyCid)
   }
-  
+
   if (cid['/']) {
     return cid['/']
   }
