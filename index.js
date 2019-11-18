@@ -15,7 +15,7 @@ const cidifyString = (str) => {
 }
 
 const stringifyCid = (cid, options) => {
-  if (!cid) {
+  if (!cid || typeof cid === 'string') {
     return cid
   }
 
