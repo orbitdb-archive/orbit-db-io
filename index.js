@@ -53,7 +53,9 @@ const writeCbor = async (ipfs, obj, options) => {
   const dagNode = Object.assign({}, obj)
   const links = options.links || []
   links.forEach((prop) => {
-    dagNode[prop] = cidifyString(dagNode[prop])
+    if (dagNode[prop]) {
+      dagNode[prop] = cidifyString(dagNode[prop])
+    }
   })
 
   const base = options.base || defaultBase
@@ -67,7 +69,9 @@ const readCbor = async (ipfs, cid, options) => {
   const obj = result.value
   const links = options.links || []
   links.forEach((prop) => {
-    obj[prop] = stringifyCid(obj[prop], options)
+    if (obj[prop]) {
+      obj[prop] = stringifyCid(obj[prop], options)
+    }
   })
 
   return obj
