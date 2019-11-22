@@ -33,7 +33,7 @@ const stringifyCid = (cid, options) => {
 
 const writePb = async (ipfs, obj, options) => {
   const buffer = Buffer.from(JSON.stringify(obj))
-  const dagNode = dagPB.DAGNode.create(buffer)
+  const dagNode = new dagPB.DAGNode(buffer)
   const cid = await ipfs.dag.put(dagNode, {
     format: 'dag-pb',
     hashAlg: 'sha2-256'
