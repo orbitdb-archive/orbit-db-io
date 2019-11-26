@@ -39,12 +39,13 @@ const writePb = async (ipfs, obj, options) => {
     hashAlg: 'sha2-256'
   })
 
+  const res = cid.toV0().toBaseEncodedString()
   const pin = options.pin || true
   if (pin) {
-    await ipfs.pin.add(cid)
+    await ipfs.pin.add(res)
   }
 
-  return cid.toV0().toBaseEncodedString()
+  return res
 }
 
 const readPb = async (ipfs, cid) => {
@@ -66,11 +67,12 @@ const writeCbor = async (ipfs, obj, options) => {
   const base = options.base || defaultBase
   const onlyHash = options.onlyHash || false
   const cid = await ipfs.dag.put(dagNode, { onlyHash })
+  const res = cid.toBaseEncodedString(base)
   const pin = options.pin || true
   if (pin) {
-    await ipfs.pin.add(cid)
+    await ipfs.pin.add(res)
   }
-  return cid.toBaseEncodedString(base)
+  return res
 }
 
 const readCbor = async (ipfs, cid, options) => {
