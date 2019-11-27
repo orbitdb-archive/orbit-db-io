@@ -40,7 +40,7 @@ const writePb = async (ipfs, obj, options) => {
   })
 
   const res = cid.toV0().toBaseEncodedString()
-  const pin = options.pin || true
+  const pin = options.pin || false
   if (pin) {
     await ipfs.pin.add(res)
   }
@@ -68,7 +68,7 @@ const writeCbor = async (ipfs, obj, options) => {
   const onlyHash = options.onlyHash || false
   const cid = await ipfs.dag.put(dagNode, { onlyHash })
   const res = cid.toBaseEncodedString(base)
-  const pin = options.pin || true
+  const pin = options.pin || false
   if (pin) {
     await ipfs.pin.add(res)
   }
@@ -97,7 +97,12 @@ const writeObj = async (ipfs, obj, options) => {
   }
 
   const cid = await ipfs.dag.put(obj, opts)
-  return cid.toBaseEncodedString(base)
+  const res = cid.toBaseEncodedString(base)
+  const pin = options.pin || false
+  if (pin) {
+    await ipfs.pin.add(res)
+  }
+  return res
 }
 
 const formats = {
