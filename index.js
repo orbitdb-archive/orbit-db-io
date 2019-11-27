@@ -93,7 +93,7 @@ const writeObj = async (ipfs, obj, options) => {
   const base = options.base || defaultBase
   const opts = Object.assign({}, { onlyHash: onlyHash }, options.format ? { format: options.format, hashAlg: 'sha2-256' } : {})
   if (opts.format === 'dag-pb') {
-    obj = dagPB.DAGNode.create(obj)
+    obj = new dagPB.DAGNode(obj)
   }
 
   const cid = await ipfs.dag.put(obj, opts)
