@@ -22,7 +22,7 @@
   "homepage": "https://github.com/orbitdb/orbit-db-io#readme",
   "dependencies": {
     "cids": "^0.7.1",
-    "ipld-dag-pb": "^0.17.4"
+    "ipld-dag-pb": "^0.18.1"
   },
   "localMaintainers": [
     "shamb0t <shams@haja.io>",

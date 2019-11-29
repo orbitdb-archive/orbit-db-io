@@ -31,15 +31,21 @@ const stringifyCid = (cid, options) => {
   return cid.toBaseEncodedString(base)
 }
 
-const writePb = async (ipfs, obj) => {
+const writePb = async (ipfs, obj, options) => {
   const buffer = Buffer.from(JSON.stringify(obj))
-  const dagNode = dagPB.DAGNode.create(buffer)
+  const dagNode = new dagPB.DAGNode(buffer)
   const cid = await ipfs.dag.put(dagNode, {
     format: 'dag-pb',
     hashAlg: 'sha2-256'
   })
 
-  return cid.toV0().toBaseEncodedString()
+  const res = cid.toV0().toBaseEncodedString()
+  const pin = options.pin || false
+  if (pin) {
+    await ipfs.pin.add(res)
+  }
+
+  return res
 }
 
 const readPb = async (ipfs, cid) => {
@@ -61,7 +67,12 @@ const writeCbor = async (ipfs, obj, options) => {
   const base = options.base || defaultBase
   const onlyHash = options.onlyHash || false
   const cid = await ipfs.dag.put(dagNode, { onlyHash })
-  return cid.toBaseEncodedString(base)
+  const res = cid.toBaseEncodedString(base)
+  const pin = options.pin || false
+  if (pin) {
+    await ipfs.pin.add(res)
+  }
+  return res
 }
 
 const readCbor = async (ipfs, cid, options) => {
@@ -82,11 +93,16 @@ const writeObj = async (ipfs, obj, options) => {
   const base = options.base || defaultBase
   const opts = Object.assign({}, { onlyHash: onlyHash }, options.format ? { format: options.format, hashAlg: 'sha2-256' } : {})
   if (opts.format === 'dag-pb') {
-    obj = dagPB.DAGNode.create(obj)
+    obj = new dagPB.DAGNode(obj)
   }
 
   const cid = await ipfs.dag.put(obj, opts)
-  return cid.toBaseEncodedString(base)
+  const res = cid.toBaseEncodedString(base)
+  const pin = options.pin || false
+  if (pin) {
+    await ipfs.pin.add(res)
+  }
+  return res
 }
 
 const formats = {
