@@ -52,7 +52,7 @@ const readPb = async (ipfs, cid) => {
   const result = await ipfs.dag.get(cid)
   const dagNode = result.value
 
-  return JSON.parse(dagNode.toJSON().data)
+  return JSON.parse(Buffer.from(dagNode.Data).toString())
 }
 
 const writeCbor = async (ipfs, obj, options) => {
