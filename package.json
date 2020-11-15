@@ -1,6 +1,6 @@
 {
   "name": "orbit-db-io",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "IO helper module for orbit-db",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/orbitdb/orbit-db-io#readme",
   "dependencies": {
-    "cids": "^1.0.0",
+    "cids": "^1.0.2",
     "ipld-dag-pb": "^0.20.0"
   },
   "localMaintainers": [
@@ -29,8 +29,8 @@
     "hajamark <mark@haja.io>"
   ],
   "devDependencies": {
-    "mocha": "^8.1.3",
+    "mocha": "^8.2.1",
     "nyc": "^15.1.0",
-    "orbit-db-test-utils": "^0.10.4"
+    "orbit-db-test-utils": "^0.13.1"
   }
 }
