@@ -29,8 +29,12 @@
     "hajamark <mark@haja.io>"
   ],
   "devDependencies": {
+    "ipfs": "~0.55.0",
+    "ipfsd-ctl": "^8.0.2",
+    "ipfs-http-client": "^50.0.0",
+    "go-ipfs": "~0.8.0",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
-    "orbit-db-test-utils": "^0.13.1"
+    "orbit-db-test-utils": "^1.0.2"
   }
 }
