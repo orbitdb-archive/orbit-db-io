@@ -6,6 +6,9 @@
   "scripts": {
     "test": "TEST=all nyc mocha"
   },
+  "engines": {
+    "node": ">= 14"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/orbitdb/orbit-db-io.git"
