@@ -12,6 +12,8 @@ const {
 
 Object.keys(testAPIs).forEach((IPFS) => {
   describe(`IO tests (${IPFS})`, function () {
+    this.timeout(10000)
+
     let ipfs, ipfsd
 
     before(async () => {
