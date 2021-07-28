@@ -1,6 +1,7 @@
 const CID = require('cids')
 const dagPB = require('ipld-dag-pb')
-const defaultBase = 'base58btc'
+const { base58btc } = require('multiformats/bases/base58')
+const defaultBase = base58btc
 
 const cidifyString = (str) => {
   if (!str) {
@@ -28,7 +29,7 @@ const stringifyCid = (cid, options) => {
   }
 
   const base = options.base || defaultBase
-  return cid.toBaseEncodedString(base)
+  return cid.toString(base)
 }
 
 const writePb = async (ipfs, obj, options) => {
@@ -39,7 +40,7 @@ const writePb = async (ipfs, obj, options) => {
     hashAlg: 'sha2-256'
   })
 
-  const res = cid.toV0().toBaseEncodedString()
+  const res = cid.toV0().toString()
   const pin = options.pin || false
   if (pin) {
     await ipfs.pin.add(res)
@@ -67,7 +68,7 @@ const writeCbor = async (ipfs, obj, options) => {
   const base = options.base || defaultBase
   const onlyHash = options.onlyHash || false
   const cid = await ipfs.dag.put(dagNode, { onlyHash })
-  const res = cid.toBaseEncodedString(base)
+  const res = cid.toString(base)
   const pin = options.pin || false
   if (pin) {
     await ipfs.pin.add(res)
@@ -97,7 +98,7 @@ const writeObj = async (ipfs, obj, options) => {
   }
 
   const cid = await ipfs.dag.put(obj, opts)
-  const res = cid.toBaseEncodedString(base)
+  const res = cid.toString(base)
   const pin = options.pin || false
   if (pin) {
     await ipfs.pin.add(res)
