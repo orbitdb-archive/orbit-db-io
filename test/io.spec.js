@@ -1,5 +1,4 @@
 const assert = require('assert')
-const CID = require('cids')
 const io = require('../index')
 
 // Test utils
