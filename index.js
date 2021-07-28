@@ -1,4 +1,5 @@
-const CID = require('cids')
+const OldCID = require('cids')
+const { CID } = require('multiformats/cid')
 const dagPB = require('ipld-dag-pb')
 const { base58btc } = require('multiformats/bases/base58')
 const defaultBase = base58btc
@@ -12,7 +13,8 @@ const cidifyString = (str) => {
     return str.map(cidifyString)
   }
 
-  return new CID(str)
+  const oldCID = new OldCID(str)
+  return CID.asCID(oldCID)
 }
 
 const stringifyCid = (cid, options) => {
@@ -73,6 +75,7 @@ const writeCbor = async (ipfs, obj, options) => {
   if (pin) {
     await ipfs.pin.add(res)
   }
+
   return res
 }
 
@@ -103,25 +106,32 @@ const writeObj = async (ipfs, obj, options) => {
   if (pin) {
     await ipfs.pin.add(res)
   }
+
   return res
 }
 
 const formats = {
-  'dag-pb': { read: readPb, write: writePb },
-  'dag-cbor': { write: writeCbor, read: readCbor },
-  'raw': { write: writeObj }
+  0x70: { read: readPb, write: writePb },
+  0x71: { write: writeCbor, read: readCbor },
+  0x55: { write: writeObj }
 }
 
 const write = (ipfs, codec, obj, options = {}) => {
-  const format = formats[codec]
+  const codecMap = {
+    'dag-pb': 0x70,
+    'dag-cbor': 0x71,
+    'raw': 0x55
+  }
+
+  const format = formats[codecMap[codec]]
   if (!format) throw new Error('Unsupported codec')
 
   return format.write(ipfs, obj, options)
 }
 
 const read = (ipfs, cid, options = {}) => {
-  cid = new CID(cid)
-  const format = formats[cid.codec]
+  cid = cidifyString(cid)
+  const format = formats[cid.code]
 
   if (!format) throw new Error('Unsupported codec')
 
