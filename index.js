@@ -1,5 +1,4 @@
 const { CID } = require('multiformats/cid')
-const dagPB = require('ipld-dag-pb')
 const { base58btc } = require('multiformats/bases/base58')
 const defaultBase = base58btc
 
@@ -32,9 +31,12 @@ const stringifyCid = (cid, options) => {
   return cid.toString(base)
 }
 
-const writePb = async (ipfs, obj, options) => {
-  const buffer = Buffer.from(JSON.stringify(obj))
-  const dagNode = new dagPB.DAGNode(buffer)
+const writePb = async (ipfs, payload, options) => {
+  const dagNode = {
+    Data: new TextEncoder().encode(JSON.stringify(payload)),
+    Links: []
+  }
+
   const cid = await ipfs.dag.put(dagNode, {
     format: 'dag-pb',
     hashAlg: 'sha2-256'
@@ -93,9 +95,13 @@ const readCbor = async (ipfs, cid, options) => {
 const writeObj = async (ipfs, obj, options) => {
   const onlyHash = options.onlyHash || false
   const base = options.base || defaultBase
-  const opts = Object.assign({}, { onlyHash: onlyHash }, options.format ? { format: options.format, hashAlg: 'sha2-256' } : {})
+  const opts = Object.assign({}, { onlyHash: onlyHash },
+    options.format ? { format: options.format, hashAlg: 'sha2-256' } : {})
   if (opts.format === 'dag-pb') {
-    obj = new dagPB.DAGNode(obj)
+    obj = {
+      Data: new TextEncoder().encode(JSON.stringify(obj)),
+      Links: []
+    }
   }
 
   const cid = await ipfs.dag.put(obj, opts)

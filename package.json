@@ -25,9 +25,6 @@
     "url": "https://github.com/orbitdb/orbit-db-io/issues"
   },
   "homepage": "https://github.com/orbitdb/orbit-db-io#readme",
-  "dependencies": {
-    "ipld-dag-pb": "^0.22.2"
-  },
   "localMaintainers": [
     "shamb0t <shams@haja.io>",
     "hajamark <mark@haja.io>"

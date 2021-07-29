@@ -76,7 +76,7 @@ Object.keys(testAPIs).forEach((IPFS) => {
       })
 
       it("writes formatted as dag-pb", async () => {
-        cid = await io.write(ipfs, 'raw', JSON.stringify(data), { format: 'dag-pb' })
+        cid = await io.write(ipfs, 'raw', data, { format: 'dag-pb' })
         assert.strictEqual(cid, 'QmaPXy3wcj4ds9baLreBGWf94zzwAUM41AiNG1eN51C9uM')
       })
 
