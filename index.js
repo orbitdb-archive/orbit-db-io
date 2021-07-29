@@ -1,4 +1,3 @@
-const OldCID = require('cids')
 const { CID } = require('multiformats/cid')
 const dagPB = require('ipld-dag-pb')
 const { base58btc } = require('multiformats/bases/base58')
@@ -13,8 +12,7 @@ const cidifyString = (str) => {
     return str.map(cidifyString)
   }
 
-  const oldCID = new OldCID(str)
-  return CID.asCID(oldCID)
+  return CID.parse(str)
 }
 
 const stringifyCid = (cid, options) => {
