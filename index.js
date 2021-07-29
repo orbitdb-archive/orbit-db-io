@@ -124,7 +124,7 @@ const write = (ipfs, codec, obj, options = {}) => {
   const codecMap = {
     'dag-pb': 0x70,
     'dag-cbor': 0x71,
-    'raw': 0x55
+    raw: 0x55
   }
 
   const format = formats[codecMap[codec]]
