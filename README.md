@@ -2,7 +2,9 @@
 
 > IO helper module used within OrbitDB
 
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/orbitdb/Lobby) [![Matrix](https://img.shields.io/badge/matrix-%23orbitdb%3Apermaweb.io-blue.svg)](https://riot.permaweb.io/#/room/#orbitdb:permaweb.io) 
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/orbitdb/Lobby)
+[![Matrix](https://img.shields.io/badge/matrix-%23orbitdb_Lobby%3Agitter.im-blue.svg)](https://app.element.io/#/room/#orbitdb_Lobby:gitter.im)
+[![CircleCI](https://circleci.com/gh/orbitdb/orbit-db-io/tree/main.svg?style=svg)](https://circleci.com/gh/orbitdb/orbit-db-test-utils/tree/main)
 
 ## Install
 
