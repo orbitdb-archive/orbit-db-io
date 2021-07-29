@@ -30,6 +30,7 @@
     "hajamark <mark@haja.io>"
   ],
   "devDependencies": {
+    "eslint": "^7.31.0",
     "go-ipfs": "^0.9.1",
     "ipfs": "^0.56.0",
     "ipfs-http-client": "^51.0.0",
