@@ -14,7 +14,7 @@ const cidifyString = (str) => {
   return CID.parse(str)
 }
 
-const stringifyCid = (cid, options) => {
+const stringifyCid = (cid, options = {}) => {
   if (!cid || typeof cid === 'string') {
     return cid
   }
@@ -134,7 +134,7 @@ const write = (ipfs, codec, obj, options = {}) => {
 }
 
 const read = (ipfs, cid, options = {}) => {
-  cid = cidifyString(cid)
+  cid = cidifyString(stringifyCid(cid))
   const format = formats[cid.code]
 
   if (!format) throw new Error('Unsupported codec')
