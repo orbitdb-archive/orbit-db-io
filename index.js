@@ -81,6 +81,8 @@ const writeCbor = async (ipfs, obj, options) => {
 
 const readCbor = async (ipfs, cid, options) => {
   const result = await ipfs.dag.get(cid)
+  console.log(result)
+  console.log(result.value.toString())
   const obj = result.value
   const links = options.links || []
   links.forEach((prop) => {
