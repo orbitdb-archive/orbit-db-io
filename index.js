@@ -80,7 +80,8 @@ async function write (ipfs, format, value, options = {}) {
   if (!codec) throw unsupportedCodecError()
 
   if (codec.code === dagPb.code) {
-    value = { Data: new TextEncoder().encode(JSON.stringify(value)), Links: [] }
+    value = typeof value === 'string' ? value : JSON.stringify(value)
+    value = { Data: new TextEncoder().encode(value), Links: [] }
   }
   if (codec.code === dagCbor.code) {
     const links = options.links || []
