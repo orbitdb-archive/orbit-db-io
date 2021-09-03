@@ -1,6 +1,13 @@
+'use strict'
 const { CID } = require('multiformats/cid')
+const Block = require('multiformats/block')
+const { sha256: hasher } = require('multiformats/hashes/sha2')
 const { base58btc } = require('multiformats/bases/base58')
+const dagPb = require('@ipld/dag-pb')
+const dagCbor = require('@ipld/dag-cbor')
 const defaultBase = base58btc
+const mhtype = 'sha2-256'
+const unsupportedCodecError = () => new Error('unsupported codec')
 
 const cidifyString = (str) => {
   if (!str) {
@@ -31,117 +38,73 @@ const stringifyCid = (cid, options = {}) => {
   return cid.toString(base)
 }
 
-const writePb = async (ipfs, payload, options) => {
-  const dagNode = {
-    Data: new TextEncoder().encode(JSON.stringify(payload)),
-    Links: []
-  }
-
-  const cid = await ipfs.dag.put(dagNode, {
-    format: 'dag-pb',
-    hashAlg: 'sha2-256'
-  })
-
-  const res = cid.toV0().toString()
-  const pin = options.pin || false
-  if (pin) {
-    await ipfs.pin.add(res)
-  }
-
-  return res
+const codecCodes = {
+  [dagPb.code]: dagPb,
+  [dagCbor.code]: dagCbor
+}
+const codecMap = {
+  // staying backward compatible
+  // old writeObj function was never raw codec; defaulted to cbor via ipfs.dag
+  raw: dagCbor,
+  'dag-pb': dagPb,
+  'dag-cbor': dagCbor
 }
 
-const readPb = async (ipfs, cid) => {
-  const result = await ipfs.dag.get(cid)
-  const dagNode = result.value
-
-  return JSON.parse(Buffer.from(dagNode.Data).toString())
-}
-
-const writeCbor = async (ipfs, obj, options) => {
-  const dagNode = Object.assign({}, obj)
-  const links = options.links || []
-  links.forEach((prop) => {
-    if (dagNode[prop]) {
-      dagNode[prop] = cidifyString(dagNode[prop])
-    }
-  })
-
-  const base = options.base || defaultBase
-  const onlyHash = options.onlyHash || false
-  const cid = await ipfs.dag.put(dagNode, { onlyHash })
-  const res = cid.toString(base)
-  const pin = options.pin || false
-  if (pin) {
-    await ipfs.pin.add(res)
-  }
-
-  return res
-}
-
-const readCbor = async (ipfs, cid, options) => {
-  const result = await ipfs.dag.get(cid)
-  console.log(result)
-  console.log(result.value.toString())
-  const obj = result.value
-  const links = options.links || []
-  links.forEach((prop) => {
-    if (obj[prop]) {
-      obj[prop] = stringifyCid(obj[prop], options)
-    }
-  })
-
-  return obj
-}
-
-const writeObj = async (ipfs, obj, options) => {
-  const onlyHash = options.onlyHash || false
-  const base = options.base || defaultBase
-  const opts = Object.assign({}, { onlyHash: onlyHash },
-    options.format ? { format: options.format, hashAlg: 'sha2-256' } : {})
-  if (opts.format === 'dag-pb') {
-    obj = {
-      Data: new TextEncoder().encode(JSON.stringify(obj)),
-      Links: []
-    }
-  }
-
-  const cid = await ipfs.dag.put(obj, opts)
-  const res = cid.toString(base)
-  const pin = options.pin || false
-  if (pin) {
-    await ipfs.pin.add(res)
-  }
-
-  return res
-}
-
-const formats = {
-  0x70: { read: readPb, write: writePb },
-  0x71: { write: writeCbor, read: readCbor },
-  0x55: { write: writeObj }
-}
-
-const write = (ipfs, codec, obj, options = {}) => {
-  const codecMap = {
-    'dag-pb': 0x70,
-    'dag-cbor': 0x71,
-    raw: 0x55
-  }
-
-  const format = formats[codecMap[codec]]
-  if (!format) throw new Error('Unsupported codec')
-
-  return format.write(ipfs, obj, options)
-}
-
-const read = (ipfs, cid, options = {}) => {
+async function read (ipfs, cid, options = {}) {
   cid = cidifyString(stringifyCid(cid))
-  const format = formats[cid.code]
 
-  if (!format) throw new Error('Unsupported codec')
+  const codec = codecCodes[cid.code]
+  if (!codec) throw unsupportedCodecError()
 
-  return format.read(ipfs, cid, options)
+  const bytes = await ipfs.block.get(cid, { timout: options.timeout })
+  const block = await Block.decode({ bytes, codec, hasher })
+
+  if (block.cid.code === dagPb.code) {
+    return JSON.parse(new TextDecoder().decode(block.value.Data))
+  }
+  if (block.cid.code === dagCbor.code) {
+    const value = block.value
+    const links = options.links || []
+    links.forEach((prop) => {
+      if (value[prop]) {
+        value[prop] = stringifyCid(value[prop], options)
+      }
+    })
+    return value
+  }
+}
+
+async function write (ipfs, format, value, options = {}) {
+  if (options.format === 'dag-pb') format = options.format
+  const codec = codecMap[format]
+  if (!codec) throw unsupportedCodecError()
+
+  if (codec.code === dagPb.code) {
+    value = { Data: new TextEncoder().encode(JSON.stringify(value)), Links: [] }
+  }
+  if (codec.code === dagCbor.code) {
+    const links = options.links || []
+    links.forEach((prop) => {
+      if (value[prop]) {
+        value[prop] = cidifyString(value[prop])
+      }
+    })
+  }
+
+  const block = await Block.encode({ value, codec, hasher })
+  await ipfs.block.put(block.bytes, {
+    cid: block.cid.bytes,
+    version: block.cid.version,
+    format,
+    mhtype,
+    pin: options.pin,
+    timeout: options.timeout
+  })
+
+  const cid = codec.code === dagPb.code
+    ? block.cid.toV0()
+    : block.cid
+  return cid.toString(options.base || defaultBase)
 }
 
 module.exports = {
