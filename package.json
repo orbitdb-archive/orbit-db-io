@@ -31,14 +31,13 @@
   ],
   "devDependencies": {
     "eslint": "^7.31.0",
-    "go-ipfs": "^0.9.1",
-    "ipfs": "^0.56.0",
-    "ipfs-http-client": "^51.0.0",
-    "ipfsd-ctl": "^9.0.0",
-    "mocha": "^9.0.3",
+    "go-ipfs": "^0.10.0-rc1",
+    "ipfs": "^0.58.2",
+    "ipfsd-ctl": "^10.0.3",
+    "mocha": "^9.1.1",
     "node-pre-gyp": "^0.17.0",
     "nyc": "^15.1.0",
-    "orbit-db-test-utils": "^1.2.0",
+    "orbit-db-test-utils": "^1.2.2-78bc242.0",
     "standard": "^16.0.3"
   },
   "standard": {
@@ -47,7 +46,6 @@
   "peerDependencies": {
     "go-ipfs": "*",
     "ipfs": "*",
-    "ipfs-http-client": "*",
     "ipfsd-ctl": "*"
   }
 }
