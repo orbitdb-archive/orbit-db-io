@@ -1,12 +1,12 @@
 'use strict'
-const { CID } = require('multiformats/cid')
 const Block = require('multiformats/block')
-const { sha256: hasher } = require('multiformats/hashes/sha2')
-const { base58btc } = require('multiformats/bases/base58')
+const { CID } = require('multiformats/cid')
 const dagPb = require('@ipld/dag-pb')
 const dagCbor = require('@ipld/dag-cbor')
-const defaultBase = base58btc
+const { sha256: hasher } = require('multiformats/hashes/sha2')
 const mhtype = 'sha2-256'
+const { base58btc } = require('multiformats/bases/base58')
+const defaultBase = base58btc
 const unsupportedCodecError = () => new Error('unsupported codec')
 
 const cidifyString = (str) => {
