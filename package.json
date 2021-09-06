@@ -37,7 +37,7 @@
     "mocha": "^9.0.3",
     "node-pre-gyp": "^0.17.0",
     "nyc": "^15.1.0",
-    "orbit-db-test-utils": "github:tabcat/orbit-db-test-utils#upgrade-ipfs",
+    "orbit-db-test-utils": "^1.2.2-78bc242.0",
     "standard": "^16.0.3"
   },
   "standard": {
