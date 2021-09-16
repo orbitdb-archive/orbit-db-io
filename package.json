@@ -47,5 +47,10 @@
     "go-ipfs": "*",
     "ipfs": "*",
     "ipfsd-ctl": "*"
+  },
+  "dependencies": {
+    "@ipld/dag-cbor": "^6.0.10",
+    "@ipld/dag-pb": "^2.1.9",
+    "multiformats": "^9.4.7"
   }
 }
