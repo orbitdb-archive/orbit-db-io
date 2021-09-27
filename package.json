@@ -37,7 +37,7 @@
     "mocha": "^9.1.1",
     "node-pre-gyp": "^0.17.0",
     "nyc": "^15.1.0",
-    "orbit-db-test-utils": "^1.2.2-78bc242.0",
+    "orbit-db-test-utils": "^1.3.0",
     "standard": "^16.0.3"
   },
   "standard": {
