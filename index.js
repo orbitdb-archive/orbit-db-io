@@ -56,7 +56,7 @@ async function read (ipfs, cid, options = {}) {
   const codec = codecCodes[cid.code]
   if (!codec) throw unsupportedCodecError()
 
-  const bytes = await ipfs.block.get(cid, { timout: options.timeout })
+  const bytes = await ipfs.block.get(cid, { timeout: options.timeout })
   const block = await Block.decode({ bytes, codec, hasher })
 
   if (block.cid.code === dagPb.code) {
