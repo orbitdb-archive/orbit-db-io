@@ -1,5 +1,6 @@
 const assert = require('assert')
 const io = require('../index')
+const timeoutCode = 'ERR_TIMEOUT'
 
 // Test utils
 const {
@@ -25,7 +26,7 @@ Object.keys(testAPIs).forEach((IPFS) => {
     })
 
     describe('dag-cbor', () => {
-      let cid1, cid2
+      let cid1, cid2, err
       const data = { test: 'object' }
 
       it('writes', async () => {
@@ -33,9 +34,19 @@ Object.keys(testAPIs).forEach((IPFS) => {
         assert.strictEqual(cid1, 'zdpuAwHevBbd7V9QXeP8zC1pdb3HmugJ7zgzKnyiWxJG3p2Y4')
       })
 
+      it('writes timeout', async () => {
+        err = await io.write(ipfs, 'dag-cbor', data, { timeout: -1 }).catch(e => e)
+        assert.strictEqual(err.code, timeoutCode)
+      })
+
       it('reads', async () => {
         const obj = await io.read(ipfs, cid1, {})
         assert.deepStrictEqual(obj, data)
+      })
+
+      it('reads timeout', async () => {
+        err = await io.read(ipfs, cid1, { timeout: -1 }).catch(e => e)
+        assert.strictEqual(err.code, timeoutCode)
       })
 
       it('writes with links', async () => {
@@ -52,7 +63,7 @@ Object.keys(testAPIs).forEach((IPFS) => {
     })
 
     describe('dag-pb', () => {
-      let cid
+      let cid, err
       const data = { test: 'object' }
 
       it('writes', async () => {
@@ -60,19 +71,34 @@ Object.keys(testAPIs).forEach((IPFS) => {
         assert.strictEqual(cid, 'QmaPXy3wcj4ds9baLreBGWf94zzwAUM41AiNG1eN51C9uM')
       })
 
+      it('writes timeout', async () => {
+        err = await io.write(ipfs, 'raw', data, { timeout: -1 }).catch(e => e)
+        assert.strictEqual(err.code, timeoutCode)
+      })
+
       it('reads', async () => {
         const obj = await io.read(ipfs, cid, {})
         assert.deepStrictEqual(obj, data)
       })
+
+      it('reads timeout', async () => {
+        err = await io.read(ipfs, cid, { timeout: -1 }).catch(e => e)
+        assert.strictEqual(err.code, timeoutCode)
+      })
     })
 
     describe('raw', () => {
-      let cid
+      let cid, err
       const data = { test: 'object' }
 
       it('writes', async () => {
         cid = await io.write(ipfs, 'raw', data, { pin: true })
         assert.strictEqual(cid, 'zdpuAwHevBbd7V9QXeP8zC1pdb3HmugJ7zgzKnyiWxJG3p2Y4')
+      })
+
+      it('writes timeout', async () => {
+        err = await io.write(ipfs, 'raw', data, { timeout: -1 }).catch(e => e)
+        assert.strictEqual(err.code, timeoutCode)
       })
 
       it('writes formatted as dag-pb', async () => {
@@ -83,6 +109,11 @@ Object.keys(testAPIs).forEach((IPFS) => {
       it('reads', async () => {
         const obj = await io.read(ipfs, cid, {})
         assert.deepStrictEqual(obj, data)
+      })
+
+      it('reads timeout', async () => {
+        err = await io.read(ipfs, cid, { timeout: -1 }).catch(e => e)
+        assert.strictEqual(err.code, timeoutCode)
       })
     })
   })
