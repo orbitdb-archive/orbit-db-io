@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "description": "IO helper module for orbit-db",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "TEST=all nyc mocha",
     "coverage": "TEST=all nyc mocha",
