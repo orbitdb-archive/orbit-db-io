@@ -4,7 +4,11 @@
   "description": "IO helper module for orbit-db",
   "main": "index.js",
   "type": "module",
+  "exports": {
+    "import": "./index.js"
+  },
   "scripts": {
+    "build": "npx ipjs build --main --test",
     "test": "TEST=all nyc mocha",
     "coverage": "TEST=all nyc mocha",
     "lint": "standard"
@@ -35,6 +39,7 @@
     "go-ipfs": "^0.10.0-rc1",
     "ipfs": "^0.58.2",
     "ipfsd-ctl": "^10.0.3",
+    "ipjs": "^5.2.0",
     "mocha": "^9.1.1",
     "node-pre-gyp": "^0.17.0",
     "nyc": "^15.1.0",
