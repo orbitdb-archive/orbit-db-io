@@ -8,8 +8,8 @@
     "import": "./index.js"
   },
   "scripts": {
-    "build": "npx ipjs build --main --test",
-    "test": "TEST=all nyc mocha",
+    "build": "npx ipjs build --main --tests",
+    "test": "npm run build && TEST=all nyc mocha dist/esm/node-test",
     "coverage": "TEST=all nyc mocha",
     "lint": "standard"
   },

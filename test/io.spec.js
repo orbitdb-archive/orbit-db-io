@@ -1,13 +1,11 @@
-const assert = require('assert')
-const io = require('../index')
-
-// Test utils
-const {
+import assert from 'assert'
+import * as io from '../index.js'
+import {
   config,
   testAPIs,
   startIpfs,
   stopIpfs
-} = require('orbit-db-test-utils')
+} from 'orbit-db-test-utils'
 
 Object.keys(testAPIs).forEach((IPFS) => {
   describe(`IO tests (${IPFS})`, function () {
