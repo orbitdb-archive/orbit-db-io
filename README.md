@@ -14,6 +14,21 @@ This project uses [npm](http://npmjs.com/) and [nodejs](https://nodejs.org/).
 npm i orbit-db-io
 ```
 
+## Get Started
+
+This library has 2 main methods: `read` and `write`.
+
+```javascript
+import IO from 'orbit-db-io';
+
+const data = {
+  key: 'value'
+};
+
+const cid = await IO.write(ipfs, 'dag-cbor', data);
+const res = await IO.read(ipfs, cid); // res equals data
+```
+
 ## Contribute
 
 Please, feel free to contribute! Take a look at [the issues](https://github.com/orbitdb/orbit-db-io/issues), and comment on an existing issue or create a new one if you have questions, bugs, or suggestions. For larger PRs, open an issue first if you could - drive-by PRs are also welcomed.
