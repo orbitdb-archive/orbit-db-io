@@ -5,6 +5,17 @@ orbs:
   node: 'circleci/node@4.5.1'
 
 jobs:
+  lint:
+    executor:
+      name: node/default
+      tag: 'lts'
+    steps:
+      - checkout
+      - run:
+          command: npm ci
+      - run:
+          command: npm run lint
+
   test:
     executor:
       name: node/default
