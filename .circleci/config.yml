@@ -5,6 +5,7 @@ orbs:
   node: 'circleci/node@4.5.1'
 
 jobs:
+
   lint:
     executor:
       name: node/default
