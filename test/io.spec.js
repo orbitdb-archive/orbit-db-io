@@ -1,3 +1,5 @@
+/* eslint-env mocha */
+
 import { strict as assert } from 'assert'
 import io from '../index.js'
 
