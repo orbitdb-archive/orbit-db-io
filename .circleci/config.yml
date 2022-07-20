@@ -14,7 +14,7 @@ jobs:
       - run:
           command: npm ci
       - run:
-          command: npm run test
+          command: npm test
 
   coverage:
     executor:
@@ -25,9 +25,9 @@ jobs:
       - run:
           command: npm ci
       - run:
-          command: npm run coverage
+          command: npm test
       - run:
-          command: npx nyc report --reporter=html
+          command: npx c8 report --reporter=html
       - store_artifacts:
           path: coverage
 
