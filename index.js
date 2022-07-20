@@ -1,11 +1,13 @@
 'use strict'
-const Block = require('multiformats/block')
-const { CID } = require('multiformats/cid')
-const dagPb = require('@ipld/dag-pb')
-const dagCbor = require('@ipld/dag-cbor')
-const { sha256: hasher } = require('multiformats/hashes/sha2')
+
+import * as Block from 'multiformats/block'
+import { CID } from 'multiformats/cid'
+import * as dagPb from '@ipld/dag-pb'
+import * as dagCbor from '@ipld/dag-cbor'
+import { sha256 as hasher } from 'multiformats/hashes/sha2'
+import { base58btc } from 'multiformats/bases/base58'
+
 const mhtype = 'sha2-256'
-const { base58btc } = require('multiformats/bases/base58')
 const defaultBase = base58btc
 const unsupportedCodecError = () => new Error('unsupported codec')
 
@@ -108,7 +110,7 @@ async function write (ipfs, format, value, options = {}) {
   return cid.toString(options.base || defaultBase)
 }
 
-module.exports = {
+export default {
   read,
   write
 }
