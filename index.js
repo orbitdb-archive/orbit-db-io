@@ -110,7 +110,7 @@ async function write (ipfs, format, value, options = {}) {
   return cid.toString(options.base || defaultBase)
 }
 
-export default {
+export {
   read,
   write
 }
