@@ -1,11 +1,12 @@
+'use strict'
+
 import * as Block from 'multiformats/block'
 import { CID } from 'multiformats/cid'
 import * as dagPb from '@ipld/dag-pb'
 import * as dagCbor from '@ipld/dag-cbor'
-import { sha256 } from 'multiformats/hashes/sha2'
+import { sha256 as hasher } from 'multiformats/hashes/sha2'
 import { base58btc } from 'multiformats/bases/base58'
 
-const hasher = sha256
 const mhtype = 'sha2-256'
 const defaultBase = base58btc
 const unsupportedCodecError = () => new Error('unsupported codec')
@@ -59,8 +60,7 @@ const codecMap = {
  * @param {object} [options={}] the options to use
  * @return {any}
  */
-
-export async function read (ipfs, cid, options = {}) {
+async function read (ipfs, cid, options = {}) {
   cid = cidifyString(stringifyCid(cid))
 
   const codec = codecCodes[cid.code]
@@ -93,8 +93,7 @@ export async function read (ipfs, cid, options = {}) {
  * @param {object} [options] - the options to use
  * @return {string}
  */
-
-export async function write (ipfs, format, value, options = {}) {
+async function write (ipfs, format, value, options = {}) {
   if (options.format === 'dag-pb') format = options.format
   const codec = codecMap[format]
   if (!codec) throw unsupportedCodecError()
@@ -126,4 +125,9 @@ export async function write (ipfs, format, value, options = {}) {
     ? block.cid.toV0()
     : block.cid
   return cid.toString(options.base || defaultBase)
+}
+
+export {
+  read,
+  write
 }

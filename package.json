@@ -1,10 +1,10 @@
 {
   "name": "orbit-db-io",
-  "version": "1.0.2",
+  "type": "module",
+  "version": "2.1.0",
   "description": "IO helper module for orbit-db",
   "main": "index.js",
   "types": "./types/index.d.ts",
-  "type": "module",
   "exports": {
     "import": "./index.js"
   },
@@ -36,18 +36,19 @@
     "hajamark <mark@haja.io>"
   ],
   "devDependencies": {
+    "c8": "^7.12.0",
     "eslint": "^7.31.0",
     "go-ipfs": "^0.10.0-rc1",
     "ipfs": "^0.58.2",
     "ipfsd-ctl": "^10.0.3",
     "ipjs": "^5.2.0",
     "jsdoc-to-markdown": "^7.1.1",
-    "mocha": "^9.1.1",
+    "mocha": "^10.0.0",
     "node-pre-gyp": "^0.17.0",
     "nyc": "^15.1.0",
-    "orbit-db-test-utils": "^1.3.0",
-    "standard": "^16.0.3",
-    "typedoc": "^0.22.13",
+    "orbit-db-test-utils": "^2.2.0",
+    "standard": "^17.0.0",
+    "typedoc": "^0.23.17",
     "typedoc-plugin-markdown": "^3.11.14",
     "typescript": "^4.6.2"
   },
@@ -60,7 +61,7 @@
     "ipfsd-ctl": "*"
   },
   "dependencies": {
-    "@ipld/dag-cbor": "^6.0.10",
+    "@ipld/dag-cbor": "^7.0.2",
     "@ipld/dag-pb": "^2.1.9",
     "multiformats": "^9.4.7",
     "tsc": "^2.0.4"
