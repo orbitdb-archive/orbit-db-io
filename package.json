@@ -35,23 +35,6 @@
     "shamb0t <shams@haja.io>",
     "hajamark <mark@haja.io>"
   ],
-  "devDependencies": {
-    "c8": "^7.12.0",
-    "eslint": "^7.31.0",
-    "go-ipfs": "^0.10.0-rc1",
-    "ipfs": "^0.58.2",
-    "ipfsd-ctl": "^10.0.3",
-    "ipjs": "^5.2.0",
-    "jsdoc-to-markdown": "^7.1.1",
-    "mocha": "^10.0.0",
-    "node-pre-gyp": "^0.17.0",
-    "nyc": "^15.1.0",
-    "orbit-db-test-utils": "^2.2.0",
-    "standard": "^17.0.0",
-    "typedoc": "^0.23.17",
-    "typedoc-plugin-markdown": "^3.11.14",
-    "typescript": "^4.6.2"
-  },
   "standard": {
     "env": "mocha"
   },
@@ -60,10 +43,10 @@
     "ipfs": "*",
     "ipfsd-ctl": "*"
   },
-  "dependencies": {
-    "@ipld/dag-cbor": "^7.0.2",
-    "@ipld/dag-pb": "^2.1.9",
-    "multiformats": "^9.4.7",
-    "tsc": "^2.0.4"
+  "devDependencies": {
+    "mocha": "^10.1.0",
+    "nyc": "^15.1.0",
+    "orbit-db-test-utils": "^2.2.0",
+    "standard": "^17.0.0"
   }
 }
