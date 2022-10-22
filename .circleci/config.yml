@@ -39,7 +39,9 @@ jobs:
       - run:
           command: npm test
       - run:
-          command: npx c8 report --reporter=html
+          command: |
+              mkdir -p coverage/tmp
+              npx c8 report --reporter=html
       - store_artifacts:
           path: coverage
 
