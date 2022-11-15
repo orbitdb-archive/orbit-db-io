@@ -1,7 +1,7 @@
 /* eslint-env mocha */
 
 import { strict as assert } from 'assert'
-import { read, write } from '../index.js'
+import { read, write } from '../src/index.js'
 
 // Test utils
 import {
