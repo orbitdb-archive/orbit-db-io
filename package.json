@@ -3,17 +3,12 @@
   "type": "module",
   "version": "2.1.0",
   "description": "IO helper module for orbit-db",
-  "main": "dist",
-  "types": "dist",
-  "exports": {
-    "import": "src/index.js"
-  },
+  "types": "./dist/types/src/index.d.ts",
+  "exports": "./src/index.js",
   "scripts": {
-    "build:types": "npx -p typescript tsc src/*.js --declaration --allowJs --emitDeclarationOnly --outDir dist",
-    "build": "npx ipjs build --main --tests && npm run build:types",
-    "prepare": "npm run build",
-    "test": "npm run build && TEST=all nyc mocha dist/esm/node-test",
-    "coverage": "TEST=all nyc mocha",
+    "build:types": "npx -p typescript tsc src/*.js --declaration --allowJs --emitDeclarationOnly --outDir dist/types/src",
+    "build": "npm run build:types",
+    "test": "npm run build && TEST=all nyc mocha",
     "lint": "standard"
   },
   "engines": {
