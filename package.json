@@ -6,8 +6,6 @@
   "types": "./dist/types/src/index.d.ts",
   "exports": "./src/index.js",
   "scripts": {
-    "build:types": "npx -p typescript tsc src/*.js --declaration --allowJs --emitDeclarationOnly --outDir dist/types/src",
-    "build": "npm run build:types",
     "test": "npm run build && TEST=all nyc mocha",
     "lint": "standard"
   },
