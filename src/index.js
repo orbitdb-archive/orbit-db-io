@@ -1,5 +1,3 @@
-'use strict'
-
 import * as Block from 'multiformats/block'
 import { CID } from 'multiformats/cid'
 import * as dagPb from '@ipld/dag-pb'
@@ -52,6 +50,14 @@ const codecMap = {
   'dag-cbor': dagCbor
 }
 
+/**
+ * Read value from ipfs dag storage
+ *
+ * @param {IPFS} ipfs the ipfs instance
+ * @param {CID | string} cid the cid of the value to read
+ * @param {object} [options={}] the options to use
+ * @return {any}
+ */
 async function read (ipfs, cid, options = {}) {
   cid = cidifyString(stringifyCid(cid))
 
@@ -76,6 +82,15 @@ async function read (ipfs, cid, options = {}) {
   }
 }
 
+/**
+ * Write value to ipfs dag storage
+ *
+ * @param {IPFS} ipfs the ipfs instance
+ * @param {string} format the codec to use for encoding the value
+ * @param {any} value the value to be written
+ * @param {object} [options] - the options to use
+ * @return {string}
+ */
 async function write (ipfs, format, value, options = {}) {
   if (options.format === 'dag-pb') format = options.format
   const codec = codecMap[format]
