@@ -1,5 +1,3 @@
-'use strict'
-
 import * as Block from 'multiformats/block'
 import { CID } from 'multiformats/cid'
 import * as dagPb from '@ipld/dag-pb'
