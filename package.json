@@ -3,7 +3,6 @@
   "type": "module",
   "version": "2.1.0",
   "description": "IO helper module for orbit-db",
-  "types": "./dist/types/src/index.d.ts",
   "main": "./src/index.js",
   "exports": "./src/index.js",
   "scripts": {
