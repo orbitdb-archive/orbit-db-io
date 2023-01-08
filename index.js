@@ -58,7 +58,8 @@ async function read (ipfs, cid, options = {}) {
   const codec = codecCodes[cid.code]
   if (!codec) throw unsupportedCodecError()
 
-  const bytes = await ipfs.block.get(cid, { timeout: options.timeout })
+  const get = (await ipfs).block.get
+  const bytes = await get(cid, { timeout: options.timeout })
   const block = await Block.decode({ bytes, codec, hasher })
 
   if (block.cid.code === dagPb.code) {
@@ -95,7 +96,8 @@ async function write (ipfs, format, value, options = {}) {
   }
 
   const block = await Block.encode({ value, codec, hasher })
-  await ipfs.block.put(block.bytes, {
+  const put = (await ipfs).block.put
+  await put(block.bytes, {
     cid: block.cid.bytes,
     version: block.cid.version,
     format,
