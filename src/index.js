@@ -30,10 +30,6 @@ const stringifyCid = (cid, options = {}) => {
     return cid.map(stringifyCid)
   }
 
-  if (cid['/']) {
-    return cid['/']
-  }
-
   const base = options.base || defaultBase
   return cid.toString(base)
 }
