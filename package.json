@@ -33,7 +33,7 @@
   "devDependencies": {
     "mocha": "^10.2.0",
     "c8": "^7.12.0",
-    "orbit-db-test-utils": "github:orbitdb/orbit-db-test-utils#latest-ipfs",
+    "orbit-db-test-utils": "next",
     "standard": "^17.0.0"
   },
   "standard": {
